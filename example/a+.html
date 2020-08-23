@@ -88,7 +88,6 @@
     }
 
     function branchsFillColor (branchs) {
-      console.log(branchs);
       if (branchs.length < 1) alert('没有任何路径，哪怕原地踏步不会没有路径，你该吃药了 -_-|||!');
       const colorMap = new Map();
       const len = branchs.length;
@@ -128,8 +127,10 @@
         clickCount = 0;
         endVector = [Number(this.getAttribute('x')), Number(this.getAttribute('y'))];
 
-        // 可以直接获取path
+        // 直接获取路径展示
         pathFillColor(ASP.getPath(startVector, endVector))
+
+        // 预期结果路径与其它分支路径展示
         // ASP.run({
         //   startVector,
         //   endVector,
