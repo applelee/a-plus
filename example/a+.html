@@ -61,20 +61,20 @@
     })
 
     function pathFillColor (path) {
+      console.log(path);
       if (path.length < 1) alert('此路不通，离终点十万八千里 -_-|||!');
       const rgba = ramdomRGBA();
-      let count = 1;
+      let count = 0;
 
       const loop = (p = path) => {
         const vector = p.shift();
+        count += 1;
 
         if (!vector) return;
         const el = document.getElementById(`${vector[0]}_${vector[1]}`);
         el.style.background = rgba;
         setTimeout(() => loop(p), 100)
-
         document.getElementById('text').innerText = count;
-        count ++;
 
         if (p.length < 1) {
           if (vector[0] !== endVector[0] || vector[1] !== endVector[1]) {
@@ -82,6 +82,37 @@
           }
           return;
         }
+      }
+
+      loop();
+    }
+
+    function branchsFillColor (branchs) {
+      console.log(branchs);
+      if (branchs.length < 1) alert('没有任何路径，哪怕原地踏步不会没有路径，你该吃药了 -_-|||!');
+      const colorMap = new Map();
+      const len = branchs.length;
+      let count = 0;
+
+      // 分支路径色彩映射
+      for (let i = 0; i < len; i ++) {
+        colorMap.set(i, ramdomRGBA());
+      }
+
+      const loop = (b = branchs) => {
+        const bLen = b.length;
+        let isComplete = true;
+        count += 1;
+
+        for (let j = 0;j < bLen; j ++) {
+          const vector = b[j].shift();
+          if (!vector) continue;
+
+          const el = document.getElementById(`${vector[0]}_${vector[1]}`);
+          el.style.background = colorMap.get(j);
+        }
+        document.getElementById('text').innerText = count;
+        if (len > count) setTimeout(() => loop(b), 100);
       }
 
       loop();
@@ -103,8 +134,8 @@
         //   startVector,
         //   endVector,
         // }, ({ path, solved, branchs }) => {
+        //   branchsFillColor(branchs);
         //   pathFillColor(path);
-        //   console.log(path, solved, branchs)
         // });
       }
     }

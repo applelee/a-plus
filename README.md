@@ -1,6 +1,6 @@
 # 说明
 
-基于javascript的A*算法例子，可用于获取两点之间的最短距离。  
+基于javascript的A*算法例子，可用于获取两点之间的最短距离。<br/>
 
 ## DEMO运行起来
 example/a+.html<br/>
@@ -11,7 +11,6 @@ example/a+.html<br/>
 ```javascript
 <script src='/lib/AstarPath.js'></script>
 ```
-<br/>
 
 ## AstarPath API
 
@@ -30,8 +29,7 @@ var ASP = AstarPath.create({
   screenSize: [col, row],
   // ...
 })
-```
-<br/>
+```  
 
 ### 实例的方法 method  
 #### instance.getPath array
@@ -40,8 +38,7 @@ var ASP = AstarPath.create({
 参数2 endVector 终点矢量
 ```javascript
 ASP.getPath(startVector, endVector)
-```
-<br/>
+```  
 
 #### instance.getSolved array
 获取探索过的矢量集合<br/>
@@ -49,8 +46,7 @@ ASP.getPath(startVector, endVector)
 参数2 endVector 终点矢量
 ```javascript
 ASP.getSolved(startVector, endVector)
-```
-<br/>
+```  
 
 #### instance.getBranchs array
 获取探索过的所有路径<br/>
@@ -58,16 +54,14 @@ ASP.getSolved(startVector, endVector)
 参数2 endVector 终点矢量
 ```javascript
 ASP.getBranchs(startVector, endVector)
-```
-<br/>
+```  
 
 #### instance.run void
 参数1 options
 参数2 对象有三个属性 path最短路径，sovled探索过的矢量合集，branchs探索过的路径合集
 ```javascript
 ASP.onPath(options, ({ path, solved, branchs }) => {})
-```
-<br/>
+```  
 
 ### options配置及初始值
 ```javascript
@@ -85,8 +79,7 @@ opstions = {
   // 障碍矢量集合
   obstacles: [],
 }
-```
-<br/>
+```  
 
 # License
 __MIT__
