@@ -11,7 +11,7 @@
     <div id='container' class='xixi'></div>
     <div id='text'></div>
   </body>
-  <script src='/lib/AStarPath.js'></script>
+  <script src='../lib/AStarPath.js'></script>
   <script>
     const box = document.getElementById('container');
     const box_w = box_h = 600;
@@ -61,7 +61,7 @@
     })
 
     function pathFillColor (path) {
-      if (path.length < 1) alert('此去青天，盖无路 -_-|||!');
+      if (path.length < 1) alert('此路不通，离终点十万八千里 -_-|||!');
       const rgba = ramdomRGBA();
       let count = 1;
 
@@ -78,7 +78,7 @@
 
         if (p.length < 1) {
           if (vector[0] !== endVector[0] || vector[1] !== endVector[1]) {
-            setTimeout(() => alert('此路不通，离终点十万八千里 -_-|||!'));
+            setTimeout(() => alert('此路不通，要么翻山，要么打洞 -_-|||!'));
           }
           return;
         }
