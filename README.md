@@ -9,15 +9,15 @@ example/a+.html 文件扔浏览器<br/>
 
 ### 引用
 ```javascript
-<script src='/lib/AstarPath.js'></script>
+<script src='/lib/APlus.js'></script>
 ```
 
-## AstarPath API
+## APlus API
 
 ### 创建实例 instance
-__new AstarPath(options)__
+__new APlus(options)__
 ```javascript
-var ASP = new AstarPath({
+var aPlus = new APlus({
   screenSize: [col, row],
   // ...
 })
@@ -25,7 +25,7 @@ var ASP = new AstarPath({
 or
 __FastFill.create(options)__
 ```javascript
-var ASP = AstarPath.create({
+var aPlus = APlus.create({
   screenSize: [col, row],
   // ...
 })
@@ -35,7 +35,7 @@ var ASP = AstarPath.create({
 参数1 options<br/>
 参数2 callback 返回一个对象包含三个属性 path最短路径，sovled探索过的矢量集合，branchs探索过的路径集合
 ```javascript
-ASP.run(options, ({ path, solved, branchs }) => {})
+aPlus.run(options, ({ path, solved, branchs }) => {})
 ```  
 
 ### 实例的方法 method  
@@ -44,7 +44,7 @@ ASP.run(options, ({ path, solved, branchs }) => {})
 参数1 startVector 起点矢量<br/>
 参数2 endVector 终点矢量
 ```javascript
-ASP.getPath(startVector, endVector)
+aPlus.getPath(startVector, endVector)
 ```  
 
 #### instance.getSolved array
@@ -52,7 +52,7 @@ ASP.getPath(startVector, endVector)
 参数1 startVector 起点矢量<br/>
 参数2 endVector 终点矢量
 ```javascript
-ASP.getSolved(startVector, endVector)
+aPlus.getSolved(startVector, endVector)
 ```  
 
 #### instance.getBranchs array
@@ -60,7 +60,7 @@ ASP.getSolved(startVector, endVector)
 参数1 startVector 起点矢量<br/>
 参数2 endVector 终点矢量
 ```javascript
-ASP.getBranchs(startVector, endVector)
+aPlus.getBranchs(startVector, endVector)
 ```  
 
 ### options配置及初始值
