@@ -5,7 +5,7 @@
 ## DEMO运行起来
 example/a+.html 文件扔浏览器<br/>
 
-## 引入FastFill
+## 引入APlus
 
 ### 引用
 ```javascript
