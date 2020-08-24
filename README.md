@@ -22,7 +22,6 @@ var aPlus = new APlus({
   // ...
 })
 ```
-or
 __FastFill.create(options)__
 ```javascript
 var aPlus = APlus.create({
