@@ -32,8 +32,8 @@ var ASP = AstarPath.create({
 ```  
 
 #### instance.run void
-参数1 options
-参数2 对象有三个属性 path最短路径，sovled探索过的矢量合集，branchs探索过的路径合集
+参数1 options<br/>
+参数2 callback 返回一个对象包含三个属性 path最短路径，sovled探索过的矢量集合，branchs探索过的路径集合
 ```javascript
 ASP.run(options, ({ path, solved, branchs }) => {})
 ```  
@@ -41,7 +41,7 @@ ASP.run(options, ({ path, solved, branchs }) => {})
 ### 实例的方法 method  
 #### instance.getPath array
 获取最短路径<br/>
-参数1 startVector 起点矢量
+参数1 startVector 起点矢量<br/>
 参数2 endVector 终点矢量
 ```javascript
 ASP.getPath(startVector, endVector)
@@ -49,7 +49,7 @@ ASP.getPath(startVector, endVector)
 
 #### instance.getSolved array
 获取探索过的矢量集合<br/>
-参数1 startVector 起点矢量
+参数1 startVector 起点矢量<br/>
 参数2 endVector 终点矢量
 ```javascript
 ASP.getSolved(startVector, endVector)
@@ -57,7 +57,7 @@ ASP.getSolved(startVector, endVector)
 
 #### instance.getBranchs array
 获取探索过的所有路径<br/>
-参数1 startVector 起点矢量
+参数1 startVector 起点矢量<br/>
 参数2 endVector 终点矢量
 ```javascript
 ASP.getBranchs(startVector, endVector)

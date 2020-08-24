@@ -11,7 +11,7 @@
     <div id='container' class='xixi'></div>
     <div id='text'></div>
   </body>
-  <script src='../lib/AStarPath.js'></script>
+  <script src='../lib/APlus.js'></script>
   <script>
     const box = document.getElementById('container');
     const box_w = box_h = 600;
@@ -52,8 +52,8 @@
       }
     }
 
-    // const ASP = new AStarPath(options); 创建实例
-    var ASP = AStarPath.create({
+    // const aPlus = new APlus(options); 创建实例
+    var aPlus = APlus.create({
       screenSize: [col, row],
       obstacles,
       // isAstar: true,
@@ -61,7 +61,6 @@
     })
 
     function pathFillColor (path) {
-      console.log(path);
       if (path.length < 1) alert('此路不通，离终点十万八千里 -_-|||!');
       const rgba = ramdomRGBA();
       let count = 0;
@@ -128,10 +127,10 @@
         endVector = [Number(this.getAttribute('x')), Number(this.getAttribute('y'))];
 
         // 直接获取路径展示
-        pathFillColor(ASP.getPath(startVector, endVector))
+        pathFillColor(aPlus.getPath(startVector, endVector))
 
         // 预期结果路径与其它分支路径展示
-        // ASP.run({
+        // aPlus.run({
         //   startVector,
         //   endVector,
         // }, ({ path, solved, branchs }) => {
