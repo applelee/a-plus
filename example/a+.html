@@ -14,6 +14,7 @@
     <div id='text'>0</div>
   </body>
   <script src='../lib/APlus.js'></script>
+  <script src='../lib/noise.js'></script>
   <script>
     const box = document.getElementById('container');
     // 场景高宽
@@ -40,7 +41,6 @@
         const element = document.createElement('div');
         // 生成 0 - 7 随机数
         const randomNum = Math.random() * 834819 & 7;
-        // const randomNum = (j/33, i/33) * 834819 & 7;
         
         element.setAttribute('x', j);
         element.setAttribute('y', i);
@@ -48,7 +48,7 @@
         element.setAttribute('style', `left: ${j * el_w}px;top: ${i * el_h}px`);
 
         // 显示格子的矢量
-        element.textContent = `${j}, ${i}`;
+        // element.textContent = `${j}, ${i}`;
 
         // 生成障碍物
         if (randomNum > 5) {
@@ -58,6 +58,31 @@
         box.appendChild(element);
 
         element.addEventListener('click', clickFn);
+      }
+    }
+
+    // 点击事件的方法
+    function clickFn () {
+      clickCount += 1;
+
+      // 获取两个格子的间的最短路径
+      if (clickCount === 1) {
+        startVector = [Number(this.getAttribute('x')), Number(this.getAttribute('y'))];
+      } else if (clickCount === 2) {
+        clickCount = 0;
+        endVector = [Number(this.getAttribute('x')), Number(this.getAttribute('y'))];
+
+        // 直接获取路径展示
+        pathFillColor(aPlus.getPath(startVector, endVector))
+
+        // 预期结果路径与其它分支路径展示
+        // aPlus.run({
+        //   startVector,
+        //   endVector,
+        // }, ({ path, solved, branchs }) => {
+        //   branchsFillColor(branchs);
+        //   pathFillColor(path);
+        // });
       }
     }
 
@@ -125,38 +150,13 @@
           }
         }
         document.getElementById('text').innerText = count;
-        if (!isComplete) {
+        if (!isComplete && count < 100) {
           count += 1;
           setTimeout(() => loop(b), 100);
         }
       }
 
       loop();
-    }
-
-    // 点击事件的方法
-    function clickFn () {
-      clickCount += 1;
-
-      // 获取两个格子的间的最短路径
-      if (clickCount === 1) {
-        startVector = [Number(this.getAttribute('x')), Number(this.getAttribute('y'))];
-      } else if (clickCount === 2) {
-        clickCount = 0;
-        endVector = [Number(this.getAttribute('x')), Number(this.getAttribute('y'))];
-
-        // 直接获取路径展示
-        pathFillColor(aPlus.getPath(startVector, endVector))
-
-        // 预期结果路径与其它分支路径展示
-        // aPlus.run({
-        //   startVector,
-        //   endVector,
-        // }, ({ path, solved, branchs }) => {
-        //   branchsFillColor(branchs);
-        //   pathFillColor(path);
-        // });
-      }
     }
 
     const ramdomRGBA = (opacity = 1) => {
