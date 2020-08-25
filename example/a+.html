@@ -2,28 +2,36 @@
 <html lang="zh-CN">
   <style>
     * {box-sizing: border-box;}
-    #text {font-size: 20px;color: #333;margin-top: 10px;}
+    body{display: flex;justify-content: center;align-items: center;flex-direction: column;height: 100vh;}
+    #text {font-size: 20px;color: #333;margin-top: 10px;position: absolute;width: 100%;top: 20px;left: 0;text-align: center;}
     .xixi {width: 600px;height: 600px;background-color: white;border: 1px solid black;position: relative;border-width: 1px 0 0 1px;}
-    .xixi div {width: 40px;height: 40px;border: 1px solid black;border-width: 0 1px 1px 0;position: absolute;font-size: 12px;color: #333;cursor: pointer;}
+    .xixi div {width: 40px;height: 40px;border: 1px solid black;border-width: 0 1px 1px 0;position: absolute;font-size: 12px;color: #333;cursor: pointer;display: flex;
+    justify-content: center;align-items: center;}
     .xixi div:hover{opacity: 0.8;}
   </style>
   <body>
     <div id='container' class='xixi'></div>
-    <div id='text'></div>
+    <div id='text'>0</div>
   </body>
   <script src='../lib/APlus.js'></script>
   <script>
     const box = document.getElementById('container');
+    // 场景高宽
     const box_w = box_h = 600;
+    // 格子尺寸
     const el_w = el_h = 40;
+    // 列
     const col = box_w / el_w;
+    // 行
     const row = box_h / el_h;
-    const children = [];
+    // 障碍物
     const obstacles = [];
-    let startVector = 0;
-    let endVector = 0;
-    let start = [];
-    let end = [];
+
+    // 开始位置矢量
+    let startVector = [];
+    // 终点位置矢量
+    let endVector = [];
+    // 点击格子的次数
     let clickCount = 0;
 
     // 生成格子
@@ -32,6 +40,7 @@
         const element = document.createElement('div');
         // 生成 0 - 7 随机数
         const randomNum = Math.random() * 834819 & 7;
+        // const randomNum = (j/33, i/33) * 834819 & 7;
         
         element.setAttribute('x', j);
         element.setAttribute('y', i);
@@ -39,7 +48,7 @@
         element.setAttribute('style', `left: ${j * el_w}px;top: ${i * el_h}px`);
 
         // 显示格子的矢量
-        // element.textContent = `${j}, ${i}`;
+        element.textContent = `${j}, ${i}`;
 
         // 生成障碍物
         if (randomNum > 5) {
@@ -57,25 +66,28 @@
       screenSize: [col, row],
       obstacles,
       // isAstar: true,
+      // isMustPath为true时必然返回一天路径
       // isMustPath: true,
     })
 
+    // 路径染色
     function pathFillColor (path) {
       if (path.length < 1) alert('此路不通，离终点十万八千里 -_-|||!');
       const rgba = ramdomRGBA();
       let count = 0;
 
       const loop = (p = path) => {
-        const vector = p.shift();
-        count += 1;
+        const vector = p[count];
 
         if (!vector) return;
         const el = document.getElementById(`${vector[0]}_${vector[1]}`);
+        // el.textContent = count + 1;
         el.style.background = rgba;
         setTimeout(() => loop(p), 100)
         document.getElementById('text').innerText = count;
 
-        if (p.length < 1) {
+        count += 1;
+        if (count >= p.length) {
           if (vector[0] !== endVector[0] || vector[1] !== endVector[1]) {
             setTimeout(() => alert('此路不通，要么翻山，要么打洞 -_-|||!'));
           }
@@ -86,6 +98,7 @@
       loop();
     }
 
+    // 路径分支集合染色
     function branchsFillColor (branchs) {
       if (branchs.length < 1) alert('没有任何路径，哪怕原地踏步不会没有路径，你该吃药了 -_-|||!');
       const colorMap = new Map();
@@ -100,22 +113,28 @@
       const loop = (b = branchs) => {
         const bLen = b.length;
         let isComplete = true;
-        count += 1;
 
         for (let j = 0;j < bLen; j ++) {
-          const vector = b[j].shift();
-          if (!vector) continue;
+          const vector = b[j][count];
 
-          const el = document.getElementById(`${vector[0]}_${vector[1]}`);
-          el.style.background = colorMap.get(j);
+          if (vector) {
+            isComplete = false;
+            const el = document.getElementById(`${vector[0]}_${vector[1]}`);
+            el.style.background = colorMap.get(j);
+            // el.textContent = count + 1;
+          }
         }
         document.getElementById('text').innerText = count;
-        if (len > count) setTimeout(() => loop(b), 100);
+        if (!isComplete) {
+          count += 1;
+          setTimeout(() => loop(b), 100);
+        }
       }
 
       loop();
     }
 
+    // 点击事件的方法
     function clickFn () {
       clickCount += 1;
 
@@ -140,9 +159,9 @@
       }
     }
 
-    const ramdomRGBA = () => {
+    const ramdomRGBA = (opacity = 1) => {
       const num = 1 << 10;
-      return `rgba(${(Math.random() * num) & 255}, ${(Math.random() * num) & 255}, ${(Math.random() * num) & 255}, 1)`;
+      return `rgba(${(Math.random() * num) & 255}, ${(Math.random() * num) & 255}, ${(Math.random() * num) & 255}, ${opacity})`;
     }
   </script>
 </html>
