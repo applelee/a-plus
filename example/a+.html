@@ -4,8 +4,8 @@
     * {box-sizing: border-box;}
     body{display: flex;justify-content: center;align-items: center;flex-direction: column;height: 100vh;}
     #text {font-size: 20px;color: #333;margin-top: 10px;position: absolute;width: 100%;top: 20px;left: 0;text-align: center;}
-    .xixi {width: 600px;height: 600px;background-color: white;border: 1px solid black;position: relative;border-width: 1px 0 0 1px;}
-    .xixi div {width: 40px;height: 40px;border: 1px solid black;border-width: 0 1px 1px 0;position: absolute;font-size: 12px;color: #333;cursor: pointer;display: flex;
+    .xixi {background-color: white;position: relative;}
+    .xixi div {border: 1px solid black;border-width: 0 1px 1px 0;position: absolute;font-size: 12px;color: #333;cursor: pointer;display: flex;
     justify-content: center;align-items: center;}
     .xixi div:hover{opacity: 0.8;}
   </style>
@@ -14,13 +14,12 @@
     <div id='text'>0</div>
   </body>
   <script src='../lib/APlus.js'></script>
-  <script src='../lib/noise.js'></script>
   <script>
     const box = document.getElementById('container');
     // 场景高宽
-    const box_w = box_h = 600;
+    const box_w = box_h = 400;
     // 格子尺寸
-    const el_w = el_h = 40;
+    const el_w = el_h = 20;
     // 列
     const col = box_w / el_w;
     // 行
@@ -35,6 +34,8 @@
     // 点击格子的次数
     let clickCount = 0;
 
+    box.style.width = box.style.height = `${box_w}px`;
+
     // 生成格子
     for (let i = 0; i < row; i ++) {
       for (let j = 0; j < col; j ++) {
@@ -45,7 +46,9 @@
         element.setAttribute('x', j);
         element.setAttribute('y', i);
         element.setAttribute('id', `${j}_${i}`);
-        element.setAttribute('style', `left: ${j * el_w}px;top: ${i * el_h}px`);
+        element.setAttribute('style', `left: ${j * el_w}px;top: ${i * el_h}px;width: ${el_w}px;height: ${el_h}px;`);
+        if (i === 0) element.style.borderTop = `1px solid black`;
+        if (j === 0) element.style.borderLeft = `1px solid black`;
 
         // 显示格子的矢量
         // element.textContent = `${j}, ${i}`;
@@ -73,16 +76,16 @@
         endVector = [Number(this.getAttribute('x')), Number(this.getAttribute('y'))];
 
         // 直接获取路径展示
-        pathFillColor(aPlus.getPath(startVector, endVector))
+        // pathFillColor(aPlus.getPath(startVector, endVector))
 
         // 预期结果路径与其它分支路径展示
-        // aPlus.run({
-        //   startVector,
-        //   endVector,
-        // }, ({ path, solved, branchs }) => {
-        //   branchsFillColor(branchs);
-        //   pathFillColor(path);
-        // });
+        aPlus.run({
+          startVector,
+          endVector,
+        }, ({ path, solved, branchs }) => {
+          branchsFillColor(branchs);
+          pathFillColor(path);
+        });
       }
     }
 
@@ -90,7 +93,9 @@
     var aPlus = APlus.create({
       screenSize: [col, row],
       obstacles,
-      // isAstar: true,
+      // 是否使用穷举法
+      isExhaustive: true,
+      // starSearch: true,
       // isMustPath为true时必然返回一天路径
       // isMustPath: true,
     })
