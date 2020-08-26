@@ -65,20 +65,23 @@ aPlus.getBranchs(startVector, endVector)
 
 ### options配置及初始值
 ```javascript
-opstions = {
-  // 是否开启 *
-  isAstar: false,
-  // 当路径无解时是否返回近似的解
-  isMustPath: false,
-  // 开始矢量
-  startVector: [0, 0],
-  // 终点矢量
-  endVector: [1, 1],
-  // 场景大小 width height
-  screenSize: [1, 1],
-  // 障碍矢量集合
-  obstacles: [],
-}
+  // 可配置项
+  let options = {
+    // 是true为穷举法，false为贪心算法
+    isExhaustive: false,
+    // 当路径无解时是否返回近似的解
+    isMustPath: false,
+    // 查询类型
+    starSearch: false,
+    // 开始矢量
+    startVector: [0, 0],
+    // 终点矢量
+    endVector: [1, 1],
+    // 场景大小 width height
+    screenSize: [1, 1],
+    // 障碍矢量集合
+    obstacles: [],
+  }
 ```  
 
 # License

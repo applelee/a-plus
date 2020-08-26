@@ -17,9 +17,9 @@
   <script>
     const box = document.getElementById('container');
     // 场景高宽
-    const box_w = box_h = 400;
+    const box_w = box_h = 800;
     // 格子尺寸
-    const el_w = el_h = 20;
+    const el_w = el_h = 40;
     // 列
     const col = box_w / el_w;
     // 行
@@ -76,16 +76,16 @@
         endVector = [Number(this.getAttribute('x')), Number(this.getAttribute('y'))];
 
         // 直接获取路径展示
-        // pathFillColor(aPlus.getPath(startVector, endVector))
+        pathFillColor(aPlus.getPath(startVector, endVector))
 
         // 预期结果路径与其它分支路径展示
-        aPlus.run({
-          startVector,
-          endVector,
-        }, ({ path, solved, branchs }) => {
-          branchsFillColor(branchs);
-          pathFillColor(path);
-        });
+        // aPlus.run({
+        //   startVector,
+        //   endVector,
+        // }, ({ path, solved, branchs }) => {
+        //   branchsFillColor(branchs);
+        //   pathFillColor(path);
+        // });
       }
     }
 
@@ -93,8 +93,8 @@
     var aPlus = APlus.create({
       screenSize: [col, row],
       obstacles,
-      // 是否使用穷举法
-      isExhaustive: true,
+      // true使用穷举法。默认为false贪心算法不一定是最优解。
+      // isExhaustive: true,
       // starSearch: true,
       // isMustPath为true时必然返回一天路径
       // isMustPath: true,
@@ -111,7 +111,7 @@
 
         if (!vector) return;
         const el = document.getElementById(`${vector[0]}_${vector[1]}`);
-        // el.textContent = count + 1;
+        el.textContent = count + 1;
         el.style.background = rgba;
         setTimeout(() => loop(p), 100)
         document.getElementById('text').innerText = count;
@@ -154,7 +154,7 @@
             // el.textContent = count + 1;
           }
         }
-        document.getElementById('text').innerText = count;
+        // document.getElementById('text').innerText = count;
         if (!isComplete && count < 100) {
           count += 1;
           setTimeout(() => loop(b), 100);
