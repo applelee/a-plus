@@ -22,7 +22,7 @@ var aPlus = new APlus({
   // ...
 })
 ```
-__FastFill.create(options)__
+__APlus.create(options)__
 ```javascript
 var aPlus = APlus.create({
   screenSize: [col, row],
